@@ -83,7 +83,8 @@ public:
         }
 
         std::string error("Lexer error: Unexcepted char ");
-        error.append(std::to_string(peek));
+        char buf[2] = {peek, 0};
+        error.append(buf);
         throw std::invalid_argument(error);
     }
 

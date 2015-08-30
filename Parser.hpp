@@ -12,14 +12,11 @@ public:
     void Expr() {
         Term();
         while (true) {
-            if (lookahead == Word::Add) {
-                Match(Word::Add);
+            if (lookahead == Word::Add || lookahead == Word::Sub) {
+                Token::Ref current = lookahead;
+                Match(lookahead);
                 Term();
-                tokenList.push_back(Word::Add);
-            } else if (lookahead == Word::Sub) {
-                Match(Word::Sub);
-                Term();
-                tokenList.push_back(Word::Sub);
+                tokenList.push_back(current);
             } else {
                 return;
             }
@@ -27,6 +24,20 @@ public:
     }
 private:
     void Term() {
+        Factor();
+        while (true) {
+            if (lookahead == Word::Mul || lookahead == Word::Div) {
+                Token::Ref current = lookahead;
+                Match(lookahead);
+                Factor();
+                tokenList.push_back(current);
+            } else {
+                return;
+            }
+        }
+    }
+
+    void Factor() {
         if (lookahead->GetTag() == Tags::kNum || lookahead->GetTag() == Tags::kReal) {
             tokenList.push_back(lookahead);
             Match(lookahead);
@@ -39,7 +50,9 @@ private:
         if (lookahead == t) {
             lookahead = lexer.Scan();
         } else {
-            throw std::logic_error("Syntax error: Unexcepted token");
+            std::string message("Syntax error: Unexcepted token ");
+            message.append(t->ToString());
+            throw std::logic_error(message);
         }
     }
 private:

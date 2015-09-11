@@ -1,0 +1,3 @@
+[submodule "smartref"]
+	path = smartref
+	url = https://github.com/xqq/SmartRef.git

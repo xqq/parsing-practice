@@ -1,20 +1,21 @@
 #ifndef PARSING_PRACTICE_TOKEN_HPP
 #define PARSING_PRACTICE_TOKEN_HPP
 
-#include <memory>
 #include <string>
 #include <vector>
+#include "smartref/RefBase.hpp"
+#include "smartref/RefPtr.hpp"
 
 enum Tags : int {
     kNum, kReal, kAdd, kSub, kMul, kDiv, kEof
 };
 
-class Token {
+class Token : public xl::RefBase {
 public:
-    typedef std::shared_ptr<Token> Ref;
+    typedef xl::RefPtr<Token> Ref;
 
     static Ref Create(int t) {
-        return std::make_shared<Token>(t);
+        return xl::RefPtr<Token>(new Token(t));
     }
 public:
     explicit Token(int t) : tag(t) { }

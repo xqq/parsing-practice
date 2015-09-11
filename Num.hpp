@@ -5,10 +5,10 @@
 
 class Num : public Token {
 public:
-    typedef std::shared_ptr<Num> Ref;
+    typedef xl::RefPtr<Num> Ref;
 
     static Ref Create(int v) {
-        return std::make_shared<Num>(v);
+        return xl::RefPtr<Num>(new Num(v));
     }
 public:
     explicit Num(int v) : Token(Tags::kNum), value(v) { }

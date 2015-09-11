@@ -5,10 +5,10 @@
 
 class Real : public Token {
 public:
-    typedef std::shared_ptr<Real> Ref;
+    typedef xl::RefPtr<Real> Ref;
 
     static Ref Create(float v) {
-        return std::make_shared<Real>(v);
+        return xl::RefPtr<Real>(new Real(v));
     }
 public:
     explicit Real(float v) : Token(Tags::kReal), value(v) { }

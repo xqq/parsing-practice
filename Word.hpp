@@ -6,10 +6,10 @@
 
 class Word : public Token {
 public:
-    typedef std::shared_ptr<Word> Ref;
+    typedef xl::RefPtr<Word> Ref;
 
     static Ref Create(const std::string& s, int tag) {
-        return std::make_shared<Word>(s, tag);
+        return xl::RefPtr<Word>(new Word(s, tag));
     }
 
     static const Word::Ref Add, Sub, Mul, Div;
